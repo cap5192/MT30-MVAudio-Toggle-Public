@@ -4,13 +4,13 @@ import backend
 app = Flask(__name__)
 
 ## Webhook Listener
-@app.route('/webhook_listener', methods=['GET','POST'])
+@app.route('/webhook_listener', methods=['POST'])
 def webhook_listener():
     serials = backend.get_mv_serials(backend.net_id)
     print(serials)
     if len(serials) == 1:
         current_status = backend.mv_current_audio_status(serials[0])
-        
+
         if current_status == False:
             backend.mv_enable_audio(serials[0])
         elif current_status == True:
